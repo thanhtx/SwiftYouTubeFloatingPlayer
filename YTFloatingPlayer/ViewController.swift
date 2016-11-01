@@ -10,14 +10,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    let videos = [Video.init(name: "Big Bunny", artist: "Google", url: NSURL(string: "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")!),
-                  Video.init(name: "Robo Toy", artist: "Google", url: NSURL(string: "http://techslides.com/demos/sample-videos/small.mp4")!),
-                  Video.init(name: "Big Bunny", artist: "Google", url: NSURL(string: "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")!),
-                  Video.init(name: "Robo Toy", artist: "Google", url: NSURL(string: "http://techslides.com/demos/sample-videos/small.mp4")!),
-                  Video.init(name: "Big Bunny", artist: "Google", url: NSURL(string: "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")!),
-                  Video.init(name: "Robo Toy", artist: "Google", url: NSURL(string: "http://techslides.com/demos/sample-videos/small.mp4")!),
-                  Video.init(name: "Big Bunny", artist: "Google", url: NSURL(string: "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")!),
-                  Video.init(name: "Robo Toy", artist: "Google", url: NSURL(string: "http://techslides.com/demos/sample-videos/small.mp4")!)]
+    let videos = [Video.init(name: "Big Bunny", artist: "Google", url: URL(string: "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")!),
+                  Video.init(name: "Robo Toy", artist: "Google", url: URL(string: "http://techslides.com/demos/sample-videos/small.mp4")!),
+                  Video.init(name: "Big Bunny", artist: "Google", url: URL(string: "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")!),
+                  Video.init(name: "Robo Toy", artist: "Google", url: URL(string: "http://techslides.com/demos/sample-videos/small.mp4")!),
+                  Video.init(name: "Big Bunny", artist: "Google", url: URL(string: "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")!),
+                  Video.init(name: "Robo Toy", artist: "Google", url: URL(string: "http://techslides.com/demos/sample-videos/small.mp4")!),
+                  Video.init(name: "Big Bunny", artist: "Google", url: URL(string: "http://clips.vorwaerts-gmbh.de/VfE_html5.mp4")!),
+                  Video.init(name: "Robo Toy", artist: "Google", url: URL(string: "http://techslides.com/demos/sample-videos/small.mp4")!)]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,13 +29,13 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func prefersStatusBarHidden() -> Bool {
+    override var prefersStatusBarHidden : Bool {
         return true
     }
     
     
-    @IBAction func showPlayer(sender: AnyObject) {
-        var urls: [NSURL] = []
+    @IBAction func showPlayer(_ sender: AnyObject) {
+        var urls: [URL] = []
         for video in videos {
             urls.append(video.url)
         }
@@ -48,19 +48,19 @@ class ViewController: UIViewController {
 //MARK: YTFTableView
 
 extension ViewController: UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videos.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell
     {
-        let cell = tableView.dequeueReusableCellWithIdentifier("VideoCell", forIndexPath: indexPath) as! VideoCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "VideoCell", for: indexPath) as! VideoCell
         return cell
     }
 }
 
 extension ViewController: UITableViewDelegate {
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let cell = cell as! VideoCell
         cell.labelArtist.text = videos[indexPath.row].artist
         cell.labelTitle.text = videos[indexPath.row].name
@@ -71,7 +71,7 @@ extension ViewController: UITableViewDelegate {
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         YTFPlayer.playIndex(indexPath.row)
     }
 }

@@ -11,7 +11,7 @@ import AVFoundation.AVPlayer
 
 extension YTFViewController {
     
-    @IBAction func playTouched(sender: AnyObject) {
+    @IBAction func playTouched(_ sender: AnyObject) {
         if (isPlaying) {
             playerView.pause()
         } else {
@@ -19,7 +19,7 @@ extension YTFViewController {
         }
     }
     
-    @IBAction func fullScreenTouched(sender: AnyObject) {
+    @IBAction func fullScreenTouched(_ sender: AnyObject) {
         if (!isFullscreen) {
             setPlayerToFullscreen()
         } else {
@@ -27,38 +27,38 @@ extension YTFViewController {
         }
     }
     
-    @IBAction func touchDragInsideSlider(sender: AnyObject) {
+    @IBAction func touchDragInsideSlider(_ sender: AnyObject) {
         dragginSlider = true
     }
     
     
-    @IBAction func valueChangedSlider(sender: AnyObject) {
+    @IBAction func valueChangedSlider(_ sender: AnyObject) {
         playerView.currentTime = Double(slider.value)
         playerView.play()
     }
     
-    @IBAction func touchUpInsideSlider(sender: AnyObject) {
+    @IBAction func touchUpInsideSlider(_ sender: AnyObject) {
         dragginSlider = false
     }
     
-    func playIndex(index: Int) {
+    func playIndex(_ index: Int) {
         print("Index \(index)")
         playerView.url = urls![index]
         playerView.play()
-        progressIndicatorView.hidden = false
+        progressIndicatorView.isHidden = false
         progressIndicatorView.startAnimating()
     }
 }
 
 extension YTFViewController: PlayerViewDelegate {
     
-    func playerVideo(player: PlayerView, statusPlayer: PVStatus, error: NSError?) {
+    func playerVideo(_ player: PlayerView, statusPlayer: PVStatus, error: NSError?) {
         
         switch statusPlayer {
-        case AVPlayerStatus.Unknown:
+        case AVPlayerStatus.unknown:
             print("Unknown")
             break
-        case AVPlayerStatus.Failed:
+        case AVPlayerStatus.failed:
             print("Failed")
             break
         default:
@@ -68,20 +68,20 @@ extension YTFViewController: PlayerViewDelegate {
     
     func readyToPlay() {
         progressIndicatorView.stopAnimating()
-        progressIndicatorView.hidden = true
+        progressIndicatorView.isHidden = true
         playerTapGesture = UITapGestureRecognizer(target: self, action: #selector(YTFViewController.showPlayerControls))
         playerView.addGestureRecognizer(playerTapGesture!)
         print("Ready to Play")
         self.playerView.play()
     }
     
-    func playerVideo(player: PlayerView, statusItemPlayer: PVItemStatus, error: NSError?) {
+    func playerVideo(_ player: PlayerView, statusItemPlayer: PVItemStatus, error: NSError?) {
     }
     
-    func playerVideo(player: PlayerView, loadedTimeRanges: [PVTimeRange]) {
-        if (progressIndicatorView.hidden == false) {
+    func playerVideo(_ player: PlayerView, loadedTimeRanges: [PVTimeRange]) {
+        if (progressIndicatorView.isHidden == false) {
             progressIndicatorView.stopAnimating()
-            progressIndicatorView.hidden = true
+            progressIndicatorView.isHidden = true
         }
         
         if let first = loadedTimeRanges.first {
@@ -90,13 +90,13 @@ extension YTFViewController: PlayerViewDelegate {
         }
     }
     
-    func playerVideo(player: PlayerView, duration: Double) {
+    func playerVideo(_ player: PlayerView, duration: Double) {
         let duration = Int(duration)
         self.entireTime.text = timeFormatted(duration)
         slider.maximumValue = Float(duration)
     }
     
-    func playerVideo(player: PlayerView, currentTime: Double) {
+    func playerVideo(_ player: PlayerView, currentTime: Double) {
         let curTime = Int(currentTime)
         self.currentTime.text = timeFormatted(curTime)
         if (!dragginSlider && (Int(slider.value) != curTime)) { // Change every second
@@ -104,16 +104,16 @@ extension YTFViewController: PlayerViewDelegate {
         }
     }
     
-    func playerVideo(player: PlayerView, rate: Float) {
+    func playerVideo(_ player: PlayerView, rate: Float) {
         print(rate)
         if (rate == 1.0) {
             isPlaying = true
-            play.setImage(UIImage(named: "pause"), forState: UIControlState.Normal)
+            play.setImage(UIImage(named: "pause"), for: UIControlState())
             hideTimer?.invalidate()
             showPlayerControls()
         } else {
             isPlaying = false
-            play.setImage(UIImage(named: "play"), forState: UIControlState.Normal)
+            play.setImage(UIImage(named: "play"), for: UIControlState())
         }
     }
     
@@ -122,7 +122,7 @@ extension YTFViewController: PlayerViewDelegate {
         playIndex(currentUrlIndex)
     }
     
-    func timeFormatted(totalSeconds: Int) -> String {
+    func timeFormatted(_ totalSeconds: Int) -> String {
         
         let seconds: Int = totalSeconds % 60
         let minutes: Int = (totalSeconds / 60) % 60

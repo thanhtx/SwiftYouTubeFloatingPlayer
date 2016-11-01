@@ -11,9 +11,9 @@ import UIKit
 class Video {
     var name: String
     var artist: String
-    var url: NSURL
+    var url: URL
     
-    init(name: String, artist: String, url: NSURL) {
+    init(name: String, artist: String, url: URL) {
         self.name = name
         self.artist = artist
         self.url = url

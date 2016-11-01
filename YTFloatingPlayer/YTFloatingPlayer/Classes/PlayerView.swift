@@ -24,33 +24,33 @@ public typealias PVPlayer = AVQueuePlayer
 public typealias PVPlayerItem = AVPlayerItem
 
 public protocol PlayerViewDelegate: class {
-    func playerVideo(player: PlayerView, statusPlayer: PVStatus, error: NSError?)
-    func playerVideo(player: PlayerView, statusItemPlayer: PVItemStatus, error: NSError?)
-    func playerVideo(player: PlayerView, loadedTimeRanges: [PVTimeRange])
-    func playerVideo(player: PlayerView, duration: Double)
-    func playerVideo(player: PlayerView, currentTime: Double)
-    func playerVideo(player: PlayerView, rate: Float)
+    func playerVideo(_ player: PlayerView, statusPlayer: PVStatus, error: NSError?)
+    func playerVideo(_ player: PlayerView, statusItemPlayer: PVItemStatus, error: NSError?)
+    func playerVideo(_ player: PlayerView, loadedTimeRanges: [PVTimeRange])
+    func playerVideo(_ player: PlayerView, duration: Double)
+    func playerVideo(_ player: PlayerView, currentTime: Double)
+    func playerVideo(_ player: PlayerView, rate: Float)
     func playerVideo(playerFinished player: PlayerView)
 }
 
 public extension PlayerViewDelegate {
     
-    func playerVideo(player: PlayerView, statusPlayer: PVStatus, error: NSError?) {
+    func playerVideo(_ player: PlayerView, statusPlayer: PVStatus, error: NSError?) {
         
     }
-    func playerVideo(player: PlayerView, statusItemPlayer: PVItemStatus, error: NSError?) {
+    func playerVideo(_ player: PlayerView, statusItemPlayer: PVItemStatus, error: NSError?) {
         
     }
-    func playerVideo(player: PlayerView, loadedTimeRanges: [PVTimeRange]) {
+    func playerVideo(_ player: PlayerView, loadedTimeRanges: [PVTimeRange]) {
         
     }
-    func playerVideo(player: PlayerView, duration: Double) {
+    func playerVideo(_ player: PlayerView, duration: Double) {
         
     }
-    func playerVideo(player: PlayerView, currentTime: Double) {
+    func playerVideo(_ player: PlayerView, currentTime: Double) {
         
     }
-    func playerVideo(player: PlayerView, rate: Float) {
+    func playerVideo(_ player: PlayerView, rate: Float) {
         
     }
     func playerVideo(playerFinished player: PlayerView) {
@@ -59,18 +59,18 @@ public extension PlayerViewDelegate {
 }
 
 public enum PlayerViewFillMode {
-    case ResizeAspect
-    case ResizeAspectFill
-    case Resize
+    case resizeAspect
+    case resizeAspectFill
+    case resize
     
     init?(videoGravity: String){
         switch videoGravity {
         case AVLayerVideoGravityResizeAspect:
-            self = .ResizeAspect
+            self = .resizeAspect
         case AVLayerVideoGravityResizeAspectFill:
-            self = .ResizeAspectFill
+            self = .resizeAspectFill
         case AVLayerVideoGravityResize:
-            self = .Resize
+            self = .resize
         default:
             return nil
         }
@@ -79,11 +79,11 @@ public enum PlayerViewFillMode {
     var AVLayerVideoGravity:String {
         get {
             switch self {
-            case .ResizeAspect:
+            case .resizeAspect:
                 return AVLayerVideoGravityResizeAspect
-            case .ResizeAspectFill:
+            case .resizeAspectFill:
                 return AVLayerVideoGravityResizeAspectFill
-            case .Resize:
+            case .resize:
                 return AVLayerVideoGravityResize
             }
         }
@@ -94,23 +94,23 @@ private extension CMTime {
     static var zero:CMTime { return kCMTimeZero }
 }
 /// A simple `UIView` subclass that is backed by an `AVPlayerLayer` layer.
-@objc public class PlayerView: UIView {
+@objc open class PlayerView: UIView {
     
     
     
-    private var playerLayer: AVPlayerLayer {
+    fileprivate var playerLayer: AVPlayerLayer {
         return layer as! AVPlayerLayer
     }
     
-    private var timeObserverToken: AnyObject?
-    private weak var lastPlayerTimeObserve: PVPlayer?
+    fileprivate var timeObserverToken: AnyObject?
+    fileprivate weak var lastPlayerTimeObserve: PVPlayer?
     
-    private var urlsQueue: [NSURL]?
+    fileprivate var urlsQueue: [URL]?
     //MARK: - Public Variables
-    public weak var delegate: PlayerViewDelegate?
+    open weak var delegate: PlayerViewDelegate?
     
-    public var loopVideosQueue = false
-    public var player: PVPlayer? {
+    open var loopVideosQueue = false
+    open var player: PVPlayer? {
         get {
             return playerLayer.player as? PVPlayer
         }
@@ -121,14 +121,14 @@ private extension CMTime {
     }
     
     
-    public var fillMode: PlayerViewFillMode! {
+    open var fillMode: PlayerViewFillMode! {
         didSet {
             playerLayer.videoGravity = fillMode.AVLayerVideoGravity
         }
     }
     
     
-    public var currentTime: Double {
+    open var currentTime: Double {
         get {
             guard let player = player else {
                 return 0
@@ -140,10 +140,10 @@ private extension CMTime {
                 return
             }
             let newTime = CMTimeMakeWithSeconds(newValue, timescale)
-            player!.seekToTime(newTime,toleranceBefore: CMTime.zero,toleranceAfter: CMTime.zero)
+            player!.seek(to: newTime,toleranceBefore: CMTime.zero,toleranceAfter: CMTime.zero)
         }
     }
-    public var interval = CMTimeMake(1, 60) {
+    open var interval = CMTimeMake(1, 60) {
         didSet {
             if rate != 0 {
                 addCurrentTimeObserver()
@@ -151,7 +151,7 @@ private extension CMTime {
         }
     }
     
-    public var rate: Float {
+    open var rate: Float {
         get {
             guard let player = player else {
                 return 0
@@ -174,16 +174,16 @@ private extension CMTime {
     /**
      Add all observers for a PVPlayer
      */
-    func addObserversPlayer(avPlayer: PVPlayer) {
-        avPlayer.addObserver(self, forKeyPath: "status", options: [.New], context: &statusContext)
-        avPlayer.addObserver(self, forKeyPath: "rate", options: [.New], context: &rateContext)
-        avPlayer.addObserver(self, forKeyPath: "currentItem", options: [.Old,.New], context: &playerItemContext)
+    func addObserversPlayer(_ avPlayer: PVPlayer) {
+        avPlayer.addObserver(self, forKeyPath: "status", options: [.new], context: &statusContext)
+        avPlayer.addObserver(self, forKeyPath: "rate", options: [.new], context: &rateContext)
+        avPlayer.addObserver(self, forKeyPath: "currentItem", options: [.old,.new], context: &playerItemContext)
     }
     
     /**
      Remove all observers for a PVPlayer
      */
-    func removeObserversPlayer(avPlayer: PVPlayer) {
+    func removeObserversPlayer(_ avPlayer: PVPlayer) {
         
         avPlayer.removeObserver(self, forKeyPath: "status", context: &statusContext)
         avPlayer.removeObserver(self, forKeyPath: "rate", context: &rateContext)
@@ -193,18 +193,18 @@ private extension CMTime {
             avPlayer.removeTimeObserver(timeObserverToken)
         }
     }
-    func addObserversVideoItem(playerItem: PVPlayerItem) {
+    func addObserversVideoItem(_ playerItem: PVPlayerItem) {
         playerItem.addObserver(self, forKeyPath: "loadedTimeRanges", options: [], context: &loadedContext)
         playerItem.addObserver(self, forKeyPath: "duration", options: [], context: &durationContext)
         playerItem.addObserver(self, forKeyPath: "status", options: [], context: &statusItemContext)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: .playerItemDidPlayToEndTime, name: AVPlayerItemDidPlayToEndTimeNotification, object: playerItem)
+        NotificationCenter.default.addObserver(self, selector: .playerItemDidPlayToEndTime, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
-    func removeObserversVideoItem(playerItem: PVPlayerItem) {
+    func removeObserversVideoItem(_ playerItem: PVPlayerItem) {
         
         playerItem.removeObserver(self, forKeyPath: "loadedTimeRanges", context: &loadedContext)
         playerItem.removeObserver(self, forKeyPath: "duration", context: &durationContext)
         playerItem.removeObserver(self, forKeyPath: "status", context: &statusItemContext)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: AVPlayerItemDidPlayToEndTimeNotification, object: playerItem)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
     
     func removeCurrentTimeObserver() {
@@ -219,14 +219,14 @@ private extension CMTime {
         removeCurrentTimeObserver()
         
         lastPlayerTimeObserve = player
-        self.timeObserverToken = player?.addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) { [weak self] time-> Void in
+        self.timeObserverToken = player?.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { [weak self] time-> Void in
             if let mySelf = self {
                 self?.delegate?.playerVideo(mySelf, currentTime: mySelf.currentTime)
             }
-        }
+        } as AnyObject?
     }
     
-    func playerItemDidPlayToEndTime(aNotification: NSNotification) {
+    func playerItemDidPlayToEndTime(_ aNotification: Notification) {
         //notification of player to stop
         let item = aNotification.object as! PVPlayerItem
         print("Itens \(player?.items().count)")
@@ -240,26 +240,26 @@ private extension CMTime {
     }
     // MARK: public Functions
     
-    public func play() {
+    open func play() {
         rate = 1
         //player?.play()
     }
     
-    public func pause() {
+    open func pause() {
         rate = 0
         //player?.pause()
     }
     
     
-    public func stop() {
+    open func stop() {
         currentTime = 0
         pause()
     }
-    public func next() {
+    open func next() {
         player?.advanceToNextItem()
     }
     
-    public func resetPlayer() {
+    open func resetPlayer() {
         urlsQueue = nil
         guard let player = player else {
             return
@@ -274,15 +274,15 @@ private extension CMTime {
         self.player = nil
     }
     
-    public func availableDuration() -> PVTimeRange {
+    open func availableDuration() -> PVTimeRange {
         let range = self.player?.currentItem?.loadedTimeRanges.first
         if let range = range {
-            return range.CMTimeRangeValue
+            return range.timeRangeValue
         }
         return PVTimeRange.zero
     }
     
-    public func screenshot() throws -> UIImage? {
+    open func screenshot() throws -> UIImage? {
         guard let time = player?.currentItem?.currentTime() else {
             return nil
         }
@@ -290,7 +290,7 @@ private extension CMTime {
         return try screenshotCMTime(time)?.0
     }
     
-    public func screenshotTime(time: Double? = nil) throws -> (UIImage, photoTime: CMTime)?{
+    open func screenshotTime(_ time: Double? = nil) throws -> (UIImage, photoTime: CMTime)?{
         guard let timescale = player?.currentItem?.duration.timescale else {
             return nil
         }
@@ -307,7 +307,7 @@ private extension CMTime {
         return try screenshotCMTime(timeToPicture)
     }
     
-    private func screenshotCMTime(cmTime: CMTime) throws -> (UIImage,photoTime: CMTime)? {
+    fileprivate func screenshotCMTime(_ cmTime: CMTime) throws -> (UIImage,photoTime: CMTime)? {
         guard let player = player , let asset = player.currentItem?.asset else {
             return nil
         }
@@ -318,11 +318,11 @@ private extension CMTime {
         imageGenerator.requestedTimeToleranceAfter = CMTime.zero
         imageGenerator.requestedTimeToleranceBefore = CMTime.zero
         
-        let ref = try imageGenerator.copyCGImageAtTime(cmTime, actualTime: &timePicture)
-        let viewImage: UIImage = UIImage(CGImage: ref)
+        let ref = try imageGenerator.copyCGImage(at: cmTime, actualTime: &timePicture)
+        let viewImage: UIImage = UIImage(cgImage: ref)
         return (viewImage, timePicture)
     }
-    public var url: NSURL? {
+    open var url: URL? {
         didSet {
             guard let url = url else {
                 urls = nil
@@ -332,7 +332,7 @@ private extension CMTime {
         }
     }
     
-    public var urls: [NSURL]? {
+    open var urls: [URL]? {
         willSet(newUrls) {
             
             resetPlayer()
@@ -343,13 +343,13 @@ private extension CMTime {
             
             urlsQueue = urls
             let playerItems = urls.map { (url) -> PVPlayerItem in
-                return PVPlayerItem(URL: url)
+                return PVPlayerItem(url: url)
             }
             
             let avPlayer = PVPlayer(items: playerItems)
             self.player = avPlayer
             
-            avPlayer.actionAtItemEnd = .Pause
+            avPlayer.actionAtItemEnd = .pause
             
             
             let playerItem = avPlayer.currentItem!
@@ -360,47 +360,47 @@ private extension CMTime {
             // Do any additional setup after loading the view, typically from a nib.
         }
     }
-    public func addVideosOnQueue(urls urls: [NSURL], afterItem: PVPlayerItem? = nil) {
+    open func addVideosOnQueue(urls: [URL], afterItem: PVPlayerItem? = nil) {
         //on last item on player
         let item = afterItem ?? player?.items().last
         
-        urlsQueue?.appendContentsOf(urls)
+        urlsQueue?.append(contentsOf: urls)
         //for each url found
         urls.forEach({ (url) in
             
             //create a video item
-            let itemNew = PVPlayerItem(URL: url)
+            let itemNew = PVPlayerItem(url: url)
             
             //and insert the item on the player
-            player?.insertItem(itemNew, afterItem: item)
+            player?.insert(itemNew, after: item)
         })
         
     }
-    public func addVideosOnQueue(urls: NSURL..., afterItem: PVPlayerItem? = nil) {
+    open func addVideosOnQueue(_ urls: URL..., afterItem: PVPlayerItem? = nil) {
         return addVideosOnQueue(urls: urls,afterItem: afterItem)
     }
     // MARK: public object lifecycle view
     
-    override public class func layerClass() -> AnyClass {
+    override open class var layerClass : AnyClass {
         return AVPlayerLayer.self
     }
     
     public convenience init() {
         self.init(frame: CGRect.zero)
         
-        self.fillMode = .ResizeAspect
+        self.fillMode = .resizeAspect
     }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.fillMode = .ResizeAspect
+        self.fillMode = .resizeAspect
     }
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        self.fillMode = .ResizeAspect
+        self.fillMode = .resizeAspect
     }
     
     deinit {
@@ -409,17 +409,17 @@ private extension CMTime {
     }
     // MARK: private variables for context KVO
     
-    private var statusContext = true
-    private var statusItemContext = true
-    private var loadedContext = true
-    private var durationContext = true
-    private var currentTimeContext = true
-    private var rateContext = true
-    private var playerItemContext = true
+    fileprivate var statusContext = true
+    fileprivate var statusItemContext = true
+    fileprivate var loadedContext = true
+    fileprivate var durationContext = true
+    fileprivate var currentTimeContext = true
+    fileprivate var rateContext = true
+    fileprivate var playerItemContext = true
     
     
     
-    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         
         //print("CHANGE",keyPath)
         
@@ -427,10 +427,10 @@ private extension CMTime {
         if context == &statusContext {
             
             guard let avPlayer = player else {
-                super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+                super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
                 return
             }
-            self.delegate?.playerVideo(self, statusPlayer: avPlayer.status, error: avPlayer.error)
+            self.delegate?.playerVideo(self, statusPlayer: avPlayer.status, error: avPlayer.error as NSError?)
             
             
         } else if context == &loadedContext {
@@ -441,7 +441,7 @@ private extension CMTime {
                 return
             }
             
-            let values = times.map({ $0.CMTimeRangeValue})
+            let values = times.map({ $0.timeRangeValue})
             self.delegate?.playerVideo(self, loadedTimeRanges: values)
             
             
@@ -456,11 +456,11 @@ private extension CMTime {
             //status of item has changed
             if let currentItem = player?.currentItem {
                 
-                self.delegate?.playerVideo(self, statusItemPlayer: currentItem.status, error: currentItem.error)
+                self.delegate?.playerVideo(self, statusItemPlayer: currentItem.status, error: currentItem.error as NSError?)
             }
             
         } else if context == &rateContext{
-            guard let newRateNumber = (change?[NSKeyValueChangeNewKey] as? NSNumber) else{
+            guard let newRateNumber = (change?[NSKeyValueChangeKey.newKey] as? NSNumber) else{
                 return
             }
             let newRate = newRateNumber.floatValue
@@ -473,16 +473,16 @@ private extension CMTime {
             self.delegate?.playerVideo(self, rate: newRate)
             
         } else if context == &playerItemContext{
-            guard let oldItem = (change?[NSKeyValueChangeOldKey] as? PVPlayerItem) else{
+            guard let oldItem = (change?[NSKeyValueChangeKey.oldKey] as? PVPlayerItem) else{
                 return
             }
             removeObserversVideoItem(oldItem)
-            guard let newItem = (change?[NSKeyValueChangeNewKey] as? PVPlayerItem) else{
+            guard let newItem = (change?[NSKeyValueChangeKey.newKey] as? PVPlayerItem) else{
                 return
             }
             addObserversVideoItem(newItem)
         } else {
-            super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
 }

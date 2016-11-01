@@ -10,7 +10,7 @@ import UIKit
 
 class NextViewController: UIViewController {
     
-    @IBAction func removePlayer(sender: AnyObject) {
+    @IBAction func removePlayer(_ sender: AnyObject) {
         YTFPlayer.finishYTFView(true)
     }
 }

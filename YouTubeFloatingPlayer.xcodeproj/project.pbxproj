@@ -292,13 +292,16 @@
 					CC42478B1CEE3E1C009D960F = {
 						CreatedOnToolsVersion = 7.3.1;
 						DevelopmentTeam = E9BBEYTP2D;
+						LastSwiftMigration = 0810;
 					};
 					CC42479F1CEE3E1C009D960F = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = CC42478B1CEE3E1C009D960F;
 					};
 					CC4247AA1CEE3E1C009D960F = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0810;
 						TestTargetID = CC42478B1CEE3E1C009D960F;
 					};
 				};
@@ -528,6 +531,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = anappaula.YTFloatingPlayer;
 				PRODUCT_NAME = YouTubeFloatingPlayer;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -540,6 +544,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = anappaula.YTFloatingPlayer;
 				PRODUCT_NAME = YouTubeFloatingPlayer;
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -553,6 +558,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = anappaula.YTDraggablePlayerTests;
 				PRODUCT_NAME = YouTubeFloatingPlayer;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YouTubeFloatingPlayer.app/YouTubeFloatingPlayer";
 			};
 			name = Debug;
@@ -566,6 +572,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = anappaula.YTDraggablePlayerTests;
 				PRODUCT_NAME = YouTubeFloatingPlayer;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YouTubeFloatingPlayer.app/YouTubeFloatingPlayer";
 			};
 			name = Release;
@@ -579,6 +586,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = anappaula.YTDraggablePlayerUITests;
 				PRODUCT_NAME = YouTubeFloatingPlayer;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = YTDraggablePlayer;
 			};
 			name = Debug;
@@ -591,6 +599,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = anappaula.YTDraggablePlayerUITests;
 				PRODUCT_NAME = YouTubeFloatingPlayer;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = YTDraggablePlayer;
 			};
 			name = Release;

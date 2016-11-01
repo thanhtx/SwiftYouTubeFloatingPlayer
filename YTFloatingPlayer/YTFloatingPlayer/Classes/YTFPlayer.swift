@@ -9,7 +9,7 @@
 import UIKit
 
 public struct YTFPlayer {
-    public static func initYTF(url: NSURL, tableCellNibName: String, delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+    public static func initYTF(_ url: URL, tableCellNibName: String, delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
         if (dragViewController == nil) {
             dragViewController = YTFViewController(nibName: "YTFViewController", bundle: nil)
         }
@@ -19,7 +19,7 @@ public struct YTFPlayer {
         dragViewController?.tableCellNibName = tableCellNibName
     }
     
-    public static func initYTF(urls: [NSURL], tableCellNibName: String, delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+    public static func initYTF(_ urls: [URL], tableCellNibName: String, delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
         if (dragViewController == nil) {
             dragViewController = YTFViewController(nibName: "YTFViewController", bundle: nil)
         }
@@ -29,39 +29,39 @@ public struct YTFPlayer {
         dragViewController?.tableCellNibName = tableCellNibName
     }
     
-    public static func showYTFView(viewController: UIViewController) {
+    public static func showYTFView(_ viewController: UIViewController) {
         if dragViewController!.isOpen == false {
-            dragViewController!.view.frame = CGRectMake(viewController.view.frame.size.width, viewController.view.frame.size.height, viewController.view.frame.size.width, viewController.view.frame.size.height)
+            dragViewController!.view.frame = CGRect(x: viewController.view.frame.size.width, y: viewController.view.frame.size.height, width: viewController.view.frame.size.width, height: viewController.view.frame.size.height)
             dragViewController!.view.alpha = 0
-            dragViewController!.view.transform = CGAffineTransformMakeScale(0.2, 0.2)
+            dragViewController!.view.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
             dragViewController!.onView = viewController.view
             
-            UIApplication.sharedApplication().keyWindow?.addSubview(dragViewController!.view)
+            UIApplication.shared.keyWindow?.addSubview(dragViewController!.view)
             
-            UIView.animateWithDuration(0.5, animations: {
-                dragViewController!.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
+            UIView.animate(withDuration: 0.5, animations: {
+                dragViewController!.view.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
                 dragViewController!.view.alpha = 1
                 
-                dragViewController!.view.frame = CGRectMake(0, 0, UIApplication.sharedApplication().keyWindow!.bounds.width, UIApplication.sharedApplication().keyWindow!.bounds.height)
+                dragViewController!.view.frame = CGRect(x: 0, y: 0, width: UIApplication.shared.keyWindow!.bounds.width, height: UIApplication.shared.keyWindow!.bounds.height)
                 
                 dragViewController!.isOpen = true
             })
         }
     }
     
-    public static func changeURL(url: NSURL) {
+    public static func changeURL(_ url: URL) {
         dragViewController?.urls = [url]
     }
     
-    public static func changeURLs(urls: [NSURL]) {
+    public static func changeURLs(_ urls: [URL]) {
         dragViewController?.urls = urls
     }
     
-    public static func changeCurrentIndex(index: Int) {
+    public static func changeCurrentIndex(_ index: Int) {
         dragViewController?.currentUrlIndex = index
     }
     
-    public static func playIndex(index: Int) {
+    public static func playIndex(_ index: Int) {
         dragViewController?.currentUrlIndex = index
         dragViewController?.playIndex(index)
         dragViewController?.hidePlayerControls(true)
@@ -79,7 +79,7 @@ public struct YTFPlayer {
         return dragViewController
     }
     
-    public static func finishYTFView(animated: Bool) {
+    public static func finishYTFView(_ animated: Bool) {
         if(dragViewController != nil) {
             dragViewController?.isOpen = false
             dragViewController?.finishViewAnimated(animated)

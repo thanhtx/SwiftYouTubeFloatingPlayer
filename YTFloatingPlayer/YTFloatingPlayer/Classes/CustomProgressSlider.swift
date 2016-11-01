@@ -24,17 +24,17 @@ class CustomSlider: UISlider {
         setup()
     }
     
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
     }
     
     func setup() {
-        self.maximumTrackTintColor = UIColor.clearColor()
-        self.continuous = true
+        self.maximumTrackTintColor = UIColor.clear
+        self.isContinuous = true
     }
     
-    override func trackRectForBounds(bounds: CGRect) -> CGRect {
-        var newBounds = super.trackRectForBounds(bounds)
+    override func trackRect(forBounds bounds: CGRect) -> CGRect {
+        var newBounds = super.trackRect(forBounds: bounds)
         newBounds.size.height = 6
         return newBounds
     }
@@ -59,7 +59,7 @@ class CustomProgress: UIProgressView {
     func setup() {
         self.layer.cornerRadius = 2.0
         self.clipsToBounds = true
-        self.transform = CGAffineTransformScale(self.transform, 1, 3)
+        self.transform = self.transform.scaledBy(x: 1, y: 3)
     }
 
 }

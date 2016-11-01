@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class YTFViewController: UIViewController {
     
@@ -32,7 +56,7 @@ class YTFViewController: UIViewController {
     var isFullscreen: Bool = false
     var dragginSlider: Bool = false
     var isMinimized: Bool = false
-    var hideTimer: NSTimer?
+    var hideTimer: Timer?
     var currentUrlIndex: Int = 0 {
         didSet {
             if (playerView != nil) {
@@ -47,7 +71,7 @@ class YTFViewController: UIViewController {
             }
         }
     }
-    var urls: [NSURL]? {
+    var urls: [URL]? {
         didSet {
             if (playerView != nil) {
                 currentUrlIndex = 0
@@ -73,11 +97,11 @@ class YTFViewController: UIViewController {
     var touchPositionStartX: CGFloat?
     
     enum UIPanGestureRecognizerDirection {
-        case Undefined
-        case Up
-        case Down
-        case Left
-        case Right
+        case undefined
+        case up
+        case down
+        case left
+        case right
     }
     
     override func viewDidLoad() {
@@ -88,7 +112,7 @@ class YTFViewController: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         calculateFrames()
     }
     
@@ -100,7 +124,7 @@ class YTFViewController: UIViewController {
     }
     
     func initViews() {
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = UIColor.clear
         self.view.alpha = 0.0
         playerControlsView.alpha = 0.0
         backPlayerControlsView.alpha = 0.0
@@ -110,7 +134,7 @@ class YTFViewController: UIViewController {
         tableView.delegate = delegate
         tableView.dataSource = dataSource
         tableView.rowHeight = CGFloat(76)
-        tableView.registerNib(UINib(nibName: tableCellNibName!, bundle: nil), forCellReuseIdentifier: tableCellNibName!)
+        tableView.register(UINib(nibName: tableCellNibName!, bundle: nil), forCellReuseIdentifier: tableCellNibName!)
     }
     
     func calculateFrames() {
@@ -129,7 +153,7 @@ class YTFViewController: UIViewController {
         self.playerControlsView.frame = self.playerControlsFrame!
         
         transparentView = UIView.init(frame: initialFirstViewFrame!)
-        transparentView?.backgroundColor = UIColor.blackColor()
+        transparentView?.backgroundColor = UIColor.black
         transparentView?.alpha = 0.0
         onView?.addSubview(transparentView!)
         
@@ -139,15 +163,15 @@ class YTFViewController: UIViewController {
         
     }
     
-    @IBAction func minimizeButtonTouched(sender: AnyObject) {
+    @IBAction func minimizeButtonTouched(_ sender: AnyObject) {
         minimizeViews()
     }
     
     func selectFirstRowOfTable() {
-        let rowToSelect:NSIndexPath = NSIndexPath(forRow: 0, inSection: 0)
+        let rowToSelect:IndexPath = IndexPath(row: 0, section: 0)
         
-        UIView.animateWithDuration(0.5, animations: {
-            self.tableView.scrollToRowAtIndexPath(rowToSelect, atScrollPosition: .Top, animated: false)
+        UIView.animate(withDuration: 0.5, animations: {
+            self.tableView.scrollToRow(at: rowToSelect, at: .top, animated: false)
         })
     }
     

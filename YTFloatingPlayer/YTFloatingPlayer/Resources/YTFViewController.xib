@@ -1,13 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11542" systemVersion="16B2657" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YTDViewController" customModule="YouTubeFloatingPlayer" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="YTDViewController" customModule="Exclusiv" customModuleProvider="target">
             <connections>
                 <outlet property="backPlayerControlsView" destination="b1H-qK-LSs" id="Bay-TI-Dg9"/>
                 <outlet property="currentTime" destination="xST-Jd-HNU" id="CiS-tO-YE0"/>
@@ -33,12 +37,12 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Qe-H2-zqa">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <subviews>
-                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mVV-1S-IXa">
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="mVV-1S-IXa">
                             <rect key="frame" x="0.0" y="180" width="320" height="388"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </tableView>
                     </subviews>
-                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="mVV-1S-IXa" firstAttribute="leading" secondItem="8Qe-H2-zqa" secondAttribute="leading" id="Bfp-ne-yfw"/>
                         <constraint firstItem="mVV-1S-IXa" firstAttribute="top" secondItem="8Qe-H2-zqa" secondAttribute="top" id="NPR-oX-yv6"/>
@@ -51,12 +55,12 @@
                         </mask>
                     </variation>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GX1-CJ-qY0" customClass="PlayerView" customModule="YouTubeFloatingPlayer" customModuleProvider="target">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GX1-CJ-qY0" customClass="PlayerView" customModule="Exclusiv" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="180"/>
                     <subviews>
                         <view alpha="0.55000000000000004" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b1H-qK-LSs" userLabel="Back Footer View">
                             <rect key="frame" x="0.0" y="136" width="320" height="44"/>
-                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="44" id="tiY-Ka-8E1"/>
                             </constraints>
@@ -81,7 +85,7 @@
                                         <constraint firstAttribute="width" constant="32" id="teI-eN-Hqd"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0l8-MD-rzm">
@@ -91,7 +95,7 @@
                                         <constraint firstAttribute="width" constant="32" id="FB2-GY-lUU"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
-                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sXu-4o-OW4">
@@ -104,14 +108,14 @@
                                         <action selector="fullScreenTouched:" destination="-1" eventType="touchUpInside" id="n7v-YJ-omz"/>
                                     </connections>
                                 </button>
-                                <progressView opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="jeq-aK-mJg" customClass="CustomProgress" customModule="YouTubeFloatingPlayer" customModuleProvider="target">
+                                <progressView opaque="NO" alpha="0.59999999999999998" contentMode="scaleToFill" verticalHuggingPriority="750" progress="1" translatesAutoresizingMaskIntoConstraints="NO" id="jeq-aK-mJg" customClass="CustomProgress" customModule="Exclusiv" customModuleProvider="target">
                                     <rect key="frame" x="76" y="21" width="168" height="2"/>
-                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" red="0.66666666666666663" green="0.66666666666666663" blue="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </progressView>
-                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="gMF-3a-S9d" customClass="CustomSlider" customModule="YouTubeFloatingPlayer" customModuleProvider="target">
+                                <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="5" translatesAutoresizingMaskIntoConstraints="NO" id="gMF-3a-S9d" customClass="CustomSlider" customModule="Exclusiv" customModuleProvider="target">
                                     <rect key="frame" x="74" y="6" width="172" height="31"/>
-                                    <color key="tintColor" red="0.85416666666666663" green="0.0083327276709560909" blue="0.01632961403612402" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="tintColor" red="0.85416666666666663" green="0.0083327276709560909" blue="0.01632961403612402" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                     <connections>
                                         <action selector="touchDragInsideSlider:" destination="-1" eventType="touchDragInside" id="LIs-6q-9vx"/>
                                         <action selector="touchUpInsideSlider:" destination="-1" eventType="touchUpInside" id="kpi-Rc-OHN"/>
@@ -119,7 +123,7 @@
                                     </connections>
                                 </slider>
                             </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             <constraints>
                                 <constraint firstItem="jeq-aK-mJg" firstAttribute="centerY" secondItem="7E7-qJ-KNO" secondAttribute="centerY" id="Bj8-Op-mYc"/>
                                 <constraint firstItem="xST-Jd-HNU" firstAttribute="leading" secondItem="tt5-IW-Rhy" secondAttribute="trailing" constant="5" id="E3C-tZ-tdz"/>
@@ -138,15 +142,15 @@
                                 <constraint firstItem="0l8-MD-rzm" firstAttribute="leading" secondItem="gMF-3a-S9d" secondAttribute="trailing" constant="5" id="zrU-BL-UvF"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbJ-GH-Get" customClass="YTFPopupCloseButton" customModule="YouTubeFloatingPlayer" customModuleProvider="target">
+                        <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cbJ-GH-Get" customClass="YTFPopupCloseButton" customModule="Exclusiv" customModuleProvider="target">
                             <rect key="frame" x="12" y="18" width="24" height="24"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="24" id="g66-CS-nhb"/>
                                 <constraint firstAttribute="height" constant="24" id="nsG-2W-hdo"/>
                             </constraints>
-                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <state key="normal">
-                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </state>
                             <connections>
                                 <action selector="minimizeButtonTouched:" destination="-1" eventType="touchUpInside" id="QmG-YW-zp1"/>
@@ -166,7 +170,7 @@
                             </variation>
                         </activityIndicatorView>
                     </subviews>
-                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <constraints>
                         <constraint firstItem="7E7-qJ-KNO" firstAttribute="leading" secondItem="GX1-CJ-qY0" secondAttribute="leading" id="37P-ma-3EE"/>
                         <constraint firstItem="b1H-qK-LSs" firstAttribute="bottom" secondItem="7E7-qJ-KNO" secondAttribute="bottom" id="7qy-oI-xwU"/>
@@ -182,7 +186,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="mVV-1S-IXa" firstAttribute="top" secondItem="GX1-CJ-qY0" secondAttribute="top" id="4Yz-Ox-t6b"/>
                 <constraint firstItem="8Qe-H2-zqa" firstAttribute="height" secondItem="GX1-CJ-qY0" secondAttribute="height" constant="28" id="93Y-9T-NU1"/>

@@ -35,8 +35,6 @@
 		CC6C23DF1D0B166400C3BBCA /* unfullscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = CC6C23D31D0B166400C3BBCA /* unfullscreen.png */; };
 		CC6C23E01D0B166400C3BBCA /* unfullscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CC6C23D41D0B166400C3BBCA /* unfullscreen@2x.png */; };
 		CC6C23E11D0B166400C3BBCA /* YTFViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CC6C23D51D0B166400C3BBCA /* YTFViewController.xib */; };
-		CCE58F771D0AF3B60048E169 /* YTDraggablePlayerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE58F761D0AF3B60048E169 /* YTDraggablePlayerUITests.swift */; };
-		CCE58F791D0AF5B10048E169 /* YTDraggablePlayerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCE58F781D0AF5B10048E169 /* YTDraggablePlayerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,8 +63,6 @@
 		CC17BC7F1D0A1013009FCD9C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = YTFloatingPlayer/Base.lproj/LaunchScreen.storyboard; sourceTree = SOURCE_ROOT; };
 		CC17BC811D0A1021009FCD9C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = YTFloatingPlayer/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 		CC17BCA51D0A138F009FCD9C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = YTFloatingPlayer/Info.plist; sourceTree = SOURCE_ROOT; };
-		CC17BCA71D0A13A0009FCD9C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = YTFloatingPlayerTests/Info.plist; sourceTree = SOURCE_ROOT; };
-		CC17BCA91D0A13A9009FCD9C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = YTFloatingPlayerUITests/Info.plist; sourceTree = SOURCE_ROOT; };
 		CC42478C1CEE3E1C009D960F /* YouTubeFloatingPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YouTubeFloatingPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4247A01CEE3E1C009D960F /* YouTubeFloatingPlayer.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouTubeFloatingPlayer.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CC4247AB1CEE3E1C009D960F /* YouTubeFloatingPlayer.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouTubeFloatingPlayer.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,8 +87,6 @@
 		CC6C23D31D0B166400C3BBCA /* unfullscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = unfullscreen.png; path = YTFloatingPlayer/YTFloatingPlayer/Resources/unfullscreen.png; sourceTree = SOURCE_ROOT; };
 		CC6C23D41D0B166400C3BBCA /* unfullscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unfullscreen@2x.png"; path = "YTFloatingPlayer/YTFloatingPlayer/Resources/unfullscreen@2x.png"; sourceTree = SOURCE_ROOT; };
 		CC6C23D51D0B166400C3BBCA /* YTFViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = YTFViewController.xib; path = YTFloatingPlayer/YTFloatingPlayer/Resources/YTFViewController.xib; sourceTree = SOURCE_ROOT; };
-		CCE58F761D0AF3B60048E169 /* YTDraggablePlayerUITests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YTDraggablePlayerUITests.swift; path = YTFloatingPlayerUITests/YTDraggablePlayerUITests.swift; sourceTree = SOURCE_ROOT; };
-		CCE58F781D0AF5B10048E169 /* YTDraggablePlayerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = YTDraggablePlayerTests.swift; path = YTFloatingPlayerTests/YTDraggablePlayerTests.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,8 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				CC42478E1CEE3E1C009D960F /* YTFPlayer */,
-				CC4247A31CEE3E1C009D960F /* YTFloatingPlayerTests */,
-				CC4247AE1CEE3E1C009D960F /* YTFloatingPlayerUITests */,
 				CC42478D1CEE3E1C009D960F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -156,27 +148,7 @@
 				CC17BCA51D0A138F009FCD9C /* Info.plist */,
 			);
 			name = YTFPlayer;
-			path = YTDraggablePlayer;
-			sourceTree = "<group>";
-		};
-		CC4247A31CEE3E1C009D960F /* YTFloatingPlayerTests */ = {
-			isa = PBXGroup;
-			children = (
-				CC17BCA71D0A13A0009FCD9C /* Info.plist */,
-				CCE58F781D0AF5B10048E169 /* YTDraggablePlayerTests.swift */,
-			);
-			name = YTFloatingPlayerTests;
-			path = YTDraggablePlayerTests;
-			sourceTree = "<group>";
-		};
-		CC4247AE1CEE3E1C009D960F /* YTFloatingPlayerUITests */ = {
-			isa = PBXGroup;
-			children = (
-				CC17BCA91D0A13A9009FCD9C /* Info.plist */,
-				CCE58F761D0AF3B60048E169 /* YTDraggablePlayerUITests.swift */,
-			);
-			name = YTFloatingPlayerUITests;
-			path = YTDraggablePlayerUITests;
+			path = YTFloatingPlayer;
 			sourceTree = "<group>";
 		};
 		CC4248081CEE472C009D960F /* YTFPlayer */ = {
@@ -186,7 +158,7 @@
 				CC6C23BA1D0B164900C3BBCA /* Classes */,
 			);
 			name = YTFPlayer;
-			path = YTDraggableVideoPlayer;
+			path = YTFloatingPlayer;
 			sourceTree = "<group>";
 		};
 		CC6C23BA1D0B164900C3BBCA /* Classes */ = {
@@ -200,8 +172,7 @@
 				CC6C23C11D0B165E00C3BBCA /* YTFPlayer.swift */,
 				CC6C23C21D0B165E00C3BBCA /* YTFViewController.swift */,
 			);
-			name = Classes;
-			path = ..;
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		CC6C23BB1D0B165300C3BBCA /* Resources */ = {
@@ -220,7 +191,7 @@
 				CC6C23D41D0B166400C3BBCA /* unfullscreen@2x.png */,
 				CC6C23D51D0B166400C3BBCA /* YTFViewController.xib */,
 			);
-			name = Resources;
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -390,7 +361,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCE58F791D0AF5B10048E169 /* YTDraggablePlayerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,7 +368,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CCE58F771D0AF3B60048E169 /* YTDraggablePlayerUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,7 +550,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = YTDraggablePlayerUITests/Info.plist;
+				INFOPLIST_FILE = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = anappaula.YTDraggablePlayerUITests;
 				PRODUCT_NAME = YouTubeFloatingPlayer;
@@ -595,7 +564,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
-				INFOPLIST_FILE = YTDraggablePlayerUITests/Info.plist;
+				INFOPLIST_FILE = "";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = anappaula.YTDraggablePlayerUITests;
 				PRODUCT_NAME = YouTubeFloatingPlayer;

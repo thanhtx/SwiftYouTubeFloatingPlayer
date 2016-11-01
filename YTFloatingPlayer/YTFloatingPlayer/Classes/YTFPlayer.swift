@@ -9,24 +9,18 @@
 import UIKit
 
 public struct YTFPlayer {
-    public static func initYTF(_ url: URL, tableCellNibName: String, delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+    public static func initYTF(_ url: URL) {
         if (dragViewController == nil) {
             dragViewController = YTFViewController(nibName: "YTFViewController", bundle: nil)
         }
         dragViewController?.urls = [url]
-        dragViewController?.delegate = delegate
-        dragViewController?.dataSource = dataSource
-        dragViewController?.tableCellNibName = tableCellNibName
     }
     
-    public static func initYTF(_ urls: [URL], tableCellNibName: String, delegate: UITableViewDelegate, dataSource: UITableViewDataSource) {
+    public static func initYTF(_ urls: [URL]) {
         if (dragViewController == nil) {
             dragViewController = YTFViewController(nibName: "YTFViewController", bundle: nil)
         }
         dragViewController?.urls = urls
-        dragViewController?.delegate = delegate
-        dragViewController?.dataSource = dataSource
-        dragViewController?.tableCellNibName = tableCellNibName
     }
     
     public static func showYTFView(_ viewController: UIViewController) {
@@ -46,6 +40,8 @@ public struct YTFPlayer {
                 
                 dragViewController!.isOpen = true
             })
+        } else {
+            dragViewController!.expandViews()
         }
     }
     

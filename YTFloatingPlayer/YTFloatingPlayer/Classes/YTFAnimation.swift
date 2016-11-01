@@ -240,15 +240,16 @@ extension YTFViewController {
             Float(xOffset) >= (restrictOffset! + 60)) {
             
             let trueOffset = initialFirstViewFrame!.size.height - 100
+            let offsetX = trueOffset * 9 / 16
             let xOffset = initialFirstViewFrame!.size.width - 160
             
             //Use this offset to adjust the position of your view accordingly
             viewMinimizedFrame?.origin.y = trueOffset
-            viewMinimizedFrame?.origin.x = xOffset - 6
+            viewMinimizedFrame?.origin.x = offsetX
             viewMinimizedFrame?.size.width = initialFirstViewFrame!.size.width
             
-            playerViewMinimizedFrame!.size.width = self.view.bounds.size.width - xOffset
-            playerViewMinimizedFrame!.size.height = 200 - xOffset * 0.5
+            playerViewMinimizedFrame!.size.width = self.view.bounds.size.width - offsetX
+            playerViewMinimizedFrame!.size.height = self.view.bounds.size.height - trueOffset
             
             UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions(), animations: {
                 self.playerView.frame = self.playerViewMinimizedFrame!
@@ -260,32 +261,17 @@ extension YTFViewController {
             recognizer.setTranslation(CGPoint.zero, in: recognizer.view)
             
         } else {
+            
+            let offsetX = trueOffset * 9 / 16
             //Use this offset to adjust the position of your view accordingly
             viewMinimizedFrame?.origin.y = trueOffset
-            viewMinimizedFrame?.origin.x = xOffset - 6
+            viewMinimizedFrame?.origin.x = offsetX
             viewMinimizedFrame?.size.width = initialFirstViewFrame!.size.width
             
-            playerViewMinimizedFrame!.size.width = self.view.bounds.size.width - xOffset
-            playerViewMinimizedFrame!.size.height = 200 - xOffset * 0.5
+            playerViewMinimizedFrame!.size.width = self.view.bounds.size.width - offsetX
+            playerViewMinimizedFrame!.size.height = self.view.bounds.size.height - trueOffset //200 - xOffset * 0.5
             
-            let restrictY = initialFirstViewFrame!.size.height - playerView!.frame.size.height - 10
-            
-            if (self.tableView.frame.origin.y < restrictY && self.tableView.frame.origin.y > 0) {
-                UIView.animate(withDuration: 0.09, delay: 0.0, options: UIViewAnimationOptions(), animations: {
-                    self.playerView.frame = self.playerViewMinimizedFrame!
-                    self.view.frame = self.viewMinimizedFrame!
-                    
-                    let percentage = (yPlayerLocation + 200) / self.initialFirstViewFrame!.size.height
-                    self.tableViewContainer.alpha = 1.0 - percentage
-                    self.transparentView!.alpha = 1.0 - percentage
-                    
-                    }, completion: { finished in
-                        if (self.panGestureDirection == UIPanGestureRecognizerDirection.down) {
-                            self.onView?.bringSubview(toFront: self.view)
-                        }
-                })
-                
-            } else if (viewMinimizedFrame!.origin.y < restrictY && viewMinimizedFrame!.origin.y > 0) {
+            if (viewMinimizedFrame!.origin.y > 0) {
                 UIView.animate(withDuration: 0.09, delay: 0.0, options: UIViewAnimationOptions(), animations: {
                     self.playerView.frame = self.playerViewMinimizedFrame!
                     self.view.frame = self.viewMinimizedFrame!
@@ -349,6 +335,8 @@ extension YTFViewController {
     }
     
     func minimizeViews() {
+        dragViewController?.playerPage.isHidden = true
+        
         tableViewContainer.backgroundColor = UIColor.white
         minimizeButton.isHidden = true
         hidePlayerControls(true)
@@ -387,12 +375,14 @@ extension YTFViewController {
     }
     
     func expandViews() {
+        dragViewController?.playerPage.isHidden = false
+        
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
             self.playerView.frame = self.playerViewFrame!
             self.view.frame = self.initialFirstViewFrame!
             self.playerView.alpha = 1.0
             self.tableViewContainer.alpha = 1.0
-            self.transparentView?.alpha = 1.0
+            //self.transparentView?.alpha = 1.0
             }, completion: { finished in
                 self.isMinimized = false
                 self.minimizeButton.isHidden = false
@@ -423,7 +413,6 @@ extension YTFViewController {
         self.view.removeFromSuperview()
         self.playerView.resetPlayer()
         self.playerView.removeFromSuperview()
-        self.tableView.removeFromSuperview()
         self.tableViewContainer.removeFromSuperview()
         self.transparentView?.removeFromSuperview()
         self.playerControlsView.removeFromSuperview()

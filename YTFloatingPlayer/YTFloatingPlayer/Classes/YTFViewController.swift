@@ -32,12 +32,11 @@ fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 
-class YTFViewController: UIViewController {
+class YTFViewController: BaseViewController {
     
     @IBOutlet weak var play: UIButton!
     @IBOutlet weak var fullscreen: UIButton!
     @IBOutlet weak var playerView: PlayerView!
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewContainer: UIView!
     @IBOutlet weak var minimizeButton: YTFPopupCloseButton!
     @IBOutlet weak var playerControlsView: UIView!
@@ -47,9 +46,9 @@ class YTFViewController: UIViewController {
     @IBOutlet weak var entireTime: UILabel!
     @IBOutlet weak var currentTime: UILabel!
     @IBOutlet weak var progressIndicatorView: UIActivityIndicatorView!
-    var delegate: UITableViewDelegate?
-    var dataSource: UITableViewDataSource?
-    var tableCellNibName: String?
+    
+    @IBOutlet weak var playerPage: PlayerPage!
+    
     var isOpen: Bool = false
     
     var isPlaying: Bool = false
@@ -64,7 +63,6 @@ class YTFViewController: UIViewController {
                 if (currentUrlIndex >= urls?.count) {
                     // Go back to first tableView item to loop list
                     currentUrlIndex = 0
-                    selectFirstRowOfTable()
                 } else {
                     playIndex(currentUrlIndex)
                 }
@@ -110,9 +108,12 @@ class YTFViewController: UIViewController {
         playerView.delegate = self
         super.viewDidLoad()
         
+        playerPage.notifierName = Constant.ViewController.player
+        addView(playerPage)
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         calculateFrames()
     }
     
@@ -130,11 +131,6 @@ class YTFViewController: UIViewController {
         backPlayerControlsView.alpha = 0.0
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(YTFViewController.panAction(_:)))
         playerView.addGestureRecognizer(gesture)
-        
-        tableView.delegate = delegate
-        tableView.dataSource = dataSource
-        tableView.rowHeight = CGFloat(76)
-        tableView.register(UINib(nibName: tableCellNibName!, bundle: nil), forCellReuseIdentifier: tableCellNibName!)
     }
     
     func calculateFrames() {
@@ -166,14 +162,5 @@ class YTFViewController: UIViewController {
     @IBAction func minimizeButtonTouched(_ sender: AnyObject) {
         minimizeViews()
     }
-    
-    func selectFirstRowOfTable() {
-        let rowToSelect:IndexPath = IndexPath(row: 0, section: 0)
-        
-        UIView.animate(withDuration: 0.5, animations: {
-            self.tableView.scrollToRow(at: rowToSelect, at: .top, animated: false)
-        })
-    }
-    
 }
 

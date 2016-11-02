@@ -103,12 +103,12 @@ class YTFViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
+        restorationIdentifier = Constant.ViewController.player
         initPlayerWithURLs()
         initViews()
         playerView.delegate = self
         super.viewDidLoad()
         
-        playerPage.notifierName = Constant.ViewController.player
         addView(playerPage)
     }
     

@@ -172,9 +172,6 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CK6-pY-hfK" customClass="PlayerPage" customModule="Exclusiv" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="318" width="320" height="250"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="250" id="vY5-c3-vD4"/>
-                            </constraints>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -189,6 +186,7 @@
                         <constraint firstItem="CK6-pY-hfK" firstAttribute="centerX" secondItem="6Wg-te-rUI" secondAttribute="centerX" id="Vok-ql-dSK"/>
                         <constraint firstItem="GX1-CJ-qY0" firstAttribute="width" secondItem="6Wg-te-rUI" secondAttribute="width" id="j0l-AR-VWy"/>
                         <constraint firstItem="GX1-CJ-qY0" firstAttribute="top" secondItem="6Wg-te-rUI" secondAttribute="top" id="pp5-K1-g61"/>
+                        <constraint firstItem="CK6-pY-hfK" firstAttribute="top" secondItem="6Wg-te-rUI" secondAttribute="top" constant="318" id="pt3-Pf-DQJ"/>
                         <constraint firstAttribute="bottom" secondItem="GX1-CJ-qY0" secondAttribute="bottom" constant="100" id="xQa-nR-tCR"/>
                     </constraints>
                 </view>

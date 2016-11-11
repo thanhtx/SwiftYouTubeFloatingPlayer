@@ -142,8 +142,13 @@ extension YTFViewController {
         }
     }
     
+    func tapAction(_ recognizer: UITapGestureRecognizer) {
+        playerPage.hideKeyboard(sender: recognizer)
+    }
+    
     func onRecognizerStateBegan(_ yPlayerLocation: CGFloat, recognizer: UIPanGestureRecognizer) {
         tableViewContainer.backgroundColor = UIColor.white
+        playerPage.hideKeyboard(sender: recognizer)
         hidePlayerControls(true)
         panGestureDirection = UIPanGestureRecognizerDirection.undefined
         

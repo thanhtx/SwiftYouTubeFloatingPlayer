@@ -110,6 +110,9 @@ class YTFViewController: BaseViewController {
         super.viewDidLoad()
         
         addView(playerPage)
+        
+        let media = initData[Constant.ViewParam.media] as! MediaDto
+        ControllerFactory.createPlayerController().joinSocket(media: media)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -131,6 +134,9 @@ class YTFViewController: BaseViewController {
         backPlayerControlsView.alpha = 0.0
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(YTFViewController.panAction(_:)))
         playerView.addGestureRecognizer(gesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(YTFViewController.tapAction(_:)))
+//        playerView.addGestureRecognizer(tapGesture)
+        //gesture.require(toFail: tapGesture)
     }
     
     func calculateFrames() {

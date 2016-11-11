@@ -45,6 +45,13 @@ public struct YTFPlayer {
         }
     }
     
+    public static func setData(_ data: [String: Any]) {
+        dragViewController?.initData = data
+        let media = data[Constant.ViewParam.media] as! MediaDto
+        let url = URL(string: media.fileUrl)!
+        YTFPlayer.changeURL(url)
+    }
+    
     public static func changeURL(_ url: URL) {
         dragViewController?.urls = [url]
     }

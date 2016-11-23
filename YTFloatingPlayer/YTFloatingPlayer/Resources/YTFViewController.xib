@@ -24,7 +24,6 @@
                 <outlet property="progress" destination="jeq-aK-mJg" id="FUH-c8-Rer"/>
                 <outlet property="progressIndicatorView" destination="Vy3-6b-5nP" id="ww2-lY-Fhc"/>
                 <outlet property="slider" destination="gMF-3a-S9d" id="OKx-AV-HWu"/>
-                <outlet property="tableViewContainer" destination="8Qe-H2-zqa" id="FAS-Gr-ki9"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -36,10 +35,6 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6Wg-te-rUI">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="668"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Qe-H2-zqa">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GX1-CJ-qY0" customClass="PlayerView" customModule="Exclusiv" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                             <subviews>
@@ -169,20 +164,15 @@
                                 <constraint firstItem="Vy3-6b-5nP" firstAttribute="centerY" secondItem="GX1-CJ-qY0" secondAttribute="centerY" id="rag-8Q-yCB"/>
                             </constraints>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CK6-pY-hfK" customClass="PlayerPage" customModule="Exclusiv" customModuleProvider="target">
+                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CK6-pY-hfK" customClass="PlayerPage" customModule="Exclusiv" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="318" width="320" height="250"/>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         </view>
                     </subviews>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     <constraints>
                         <constraint firstItem="GX1-CJ-qY0" firstAttribute="centerX" secondItem="6Wg-te-rUI" secondAttribute="centerX" id="1fX-0U-Ihl"/>
                         <constraint firstItem="CK6-pY-hfK" firstAttribute="width" secondItem="6Wg-te-rUI" secondAttribute="width" id="5No-DX-bxm"/>
-                        <constraint firstItem="8Qe-H2-zqa" firstAttribute="top" secondItem="6Wg-te-rUI" secondAttribute="top" id="6Bx-2o-mty"/>
-                        <constraint firstAttribute="bottom" secondItem="8Qe-H2-zqa" secondAttribute="bottom" constant="100" id="GIp-1H-yPP"/>
-                        <constraint firstAttribute="bottom" secondItem="CK6-pY-hfK" secondAttribute="bottom" constant="100" id="Nax-1R-xVf"/>
-                        <constraint firstItem="8Qe-H2-zqa" firstAttribute="width" secondItem="6Wg-te-rUI" secondAttribute="width" id="PWo-O0-NfC"/>
-                        <constraint firstItem="8Qe-H2-zqa" firstAttribute="centerX" secondItem="6Wg-te-rUI" secondAttribute="centerX" id="Qsc-5H-9Yc"/>
                         <constraint firstItem="CK6-pY-hfK" firstAttribute="centerX" secondItem="6Wg-te-rUI" secondAttribute="centerX" id="Vok-ql-dSK"/>
                         <constraint firstItem="GX1-CJ-qY0" firstAttribute="width" secondItem="6Wg-te-rUI" secondAttribute="width" id="j0l-AR-VWy"/>
                         <constraint firstItem="GX1-CJ-qY0" firstAttribute="top" secondItem="6Wg-te-rUI" secondAttribute="top" id="pp5-K1-g61"/>

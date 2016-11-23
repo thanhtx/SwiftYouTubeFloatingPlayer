@@ -99,7 +99,7 @@ extension YTFViewController {
                 self.playerControlsView.frame.origin.y = originY
                 self.playerControlsView.frame.size.width = self.initialFirstViewFrame!.size.height
                 
-                self.showPlayerControls()
+                //self.showPlayerControls()
         })
     }
     
@@ -147,7 +147,6 @@ extension YTFViewController {
     }
     
     func onRecognizerStateBegan(_ yPlayerLocation: CGFloat, recognizer: UIPanGestureRecognizer) {
-        tableViewContainer.backgroundColor = UIColor.white
         playerPage.hideKeyboard(sender: recognizer)
         hidePlayerControls(true)
         panGestureDirection = UIPanGestureRecognizerDirection.undefined
@@ -192,7 +191,7 @@ extension YTFViewController {
             }
             
         } else if (panGestureDirection == UIPanGestureRecognizerDirection.left) {
-            if (tableViewContainer.alpha <= 0) {
+            if self.isMinimized {
                 if (self.view?.frame.origin.x < 0) {
                     removeViews()
                     
@@ -203,7 +202,7 @@ extension YTFViewController {
             }
             
         } else {
-            if (tableViewContainer.alpha <= 0) {
+            if self.isMinimized {
                 if (self.view?.frame.origin.x > initialFirstViewFrame!.size.width - 50) {
                     removeViews()
                     
@@ -259,7 +258,6 @@ extension YTFViewController {
             UIView.animate(withDuration: 0.05, delay: 0.0, options: UIViewAnimationOptions(), animations: {
                 self.playerView.frame = self.playerViewMinimizedFrame!
                 self.view.frame = self.viewMinimizedFrame!
-                self.tableViewContainer.alpha = 0.0
                 }, completion: { finished in
                     self.isMinimized = true
             })
@@ -293,7 +291,7 @@ extension YTFViewController {
         
         if (panGestureDirection == UIPanGestureRecognizerDirection.left ||
             panGestureDirection == UIPanGestureRecognizerDirection.right) {
-            if (self.tableViewContainer.alpha <= 0) {
+            if (self.isMinimized) {
                 let velocity = recognizer.velocity(in: recognizer.view)
                 
                 let isVerticalGesture = fabs(velocity.y) > fabs(velocity.x)
@@ -330,7 +328,6 @@ extension YTFViewController {
             self.view.frame = self.viewMinimizedFrame!
             self.playerView!.frame = self.playerViewFrame!
             self.playerView.frame = CGRect(x: self.playerView!.frame.origin.x, y: self.playerView!.frame.origin.x, width: self.playerViewMinimizedFrame!.size.width, height: self.playerViewMinimizedFrame!.size.height)
-            self.tableViewContainer!.alpha = 0.0
             self.playerView.alpha = 1.0
             
             }, completion: nil)
@@ -341,8 +338,7 @@ extension YTFViewController {
     
     func minimizeViews() {
         dragViewController?.playerPage.isHidden = true
-        
-        tableViewContainer.backgroundColor = UIColor.white
+
         minimizeButton.isHidden = true
         hidePlayerControls(true)
         let trueOffset = initialFirstViewFrame!.size.height - 100
@@ -361,8 +357,7 @@ extension YTFViewController {
             
             self.playerView.layer.borderWidth = 1
             self.playerView.layer.borderColor = UIColor(red:255/255.0, green:255/255.0, blue:255/255.0, alpha: 0.5).cgColor
-            
-            self.tableViewContainer.alpha = 0.0
+
             self.transparentView?.alpha = 0.0
             }, completion: { finished in
                 self.isMinimized = true
@@ -386,17 +381,15 @@ extension YTFViewController {
             self.playerView.frame = self.playerViewFrame!
             self.view.frame = self.initialFirstViewFrame!
             self.playerView.alpha = 1.0
-            self.tableViewContainer.alpha = 1.0
             //self.transparentView?.alpha = 1.0
             }, completion: { finished in
                 self.isMinimized = false
                 self.minimizeButton.isHidden = false
-                self.playerView.removeGestureRecognizer(self.playerTapGesture!)
+                //self.playerView.removeGestureRecognizer(self.playerTapGesture!)
                 self.playerTapGesture = nil
-                self.playerTapGesture = UITapGestureRecognizer(target: self, action: #selector(YTFViewController.showPlayerControls))
-                self.playerView.addGestureRecognizer(self.playerTapGesture!)
-                self.tableViewContainer.backgroundColor = UIColor.black
-                self.showPlayerControls()
+                //self.playerTapGesture = UITapGestureRecognizer(target: self, action: #selector(YTFViewController.showPlayerControls))
+                //self.playerView.addGestureRecognizer(self.playerTapGesture!)
+                //self.showPlayerControls()
         })
     }
     
@@ -416,12 +409,11 @@ extension YTFViewController {
     
     func removeViews() {
         self.view.removeFromSuperview()
-        self.playerView.resetPlayer()
-        self.playerView.removeFromSuperview()
-        self.tableViewContainer.removeFromSuperview()
+        self.playerView?.resetPlayer()
+        self.playerView?.removeFromSuperview()
         self.transparentView?.removeFromSuperview()
-        self.playerControlsView.removeFromSuperview()
-        self.backPlayerControlsView.removeFromSuperview()
+        self.playerControlsView?.removeFromSuperview()
+        self.backPlayerControlsView?.removeFromSuperview()
     }
     
 }

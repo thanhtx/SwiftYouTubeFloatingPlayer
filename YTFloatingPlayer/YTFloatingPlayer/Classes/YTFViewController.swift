@@ -37,7 +37,7 @@ class YTFViewController: BaseViewController {
     @IBOutlet weak var play: UIButton!
     @IBOutlet weak var fullscreen: UIButton!
     @IBOutlet weak var playerView: PlayerView!
-    @IBOutlet weak var tableViewContainer: UIView!
+//    @IBOutlet weak var tableViewContainer: UIView!
     @IBOutlet weak var minimizeButton: YTFPopupCloseButton!
     @IBOutlet weak var playerControlsView: UIView!
     @IBOutlet weak var backPlayerControlsView: UIView!
@@ -79,7 +79,7 @@ class YTFViewController: BaseViewController {
     
     var playerControlsFrame: CGRect?
     var playerViewFrame: CGRect?
-    var tableViewContainerFrame: CGRect?
+//    var tableViewContainerFrame: CGRect?
     var playerViewMinimizedFrame: CGRect?
     var minimizedPlayerFrame: CGRect?
     var initialFirstViewFrame: CGRect?
@@ -102,6 +102,8 @@ class YTFViewController: BaseViewController {
         case right
     }
     
+    let playerController = ControllerFactory.createPlayerController()
+    
     override func viewDidLoad() {
         restorationIdentifier = Constant.ViewController.player
         initPlayerWithURLs()
@@ -110,14 +112,19 @@ class YTFViewController: BaseViewController {
         super.viewDidLoad()
         
         addView(playerPage)
-        
-        let media = initData[Constant.ViewParam.media] as! MediaDto
-        ControllerFactory.createPlayerController().joinSocket(media: media)
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        let media = initData[Constant.ViewParam.media] as! MediaDto
+        playerController.joinSocket(media: media)
+        
         super.viewDidAppear(animated)
         calculateFrames()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        playerController.leaveSocket()
     }
     
     func initPlayerWithURLs() {
@@ -134,6 +141,8 @@ class YTFViewController: BaseViewController {
         backPlayerControlsView.alpha = 0.0
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(YTFViewController.panAction(_:)))
         playerView.addGestureRecognizer(gesture)
+        playerView.fillMode = .resizeAspectFill
+        self.hidePlayerControls(false)
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(YTFViewController.tapAction(_:)))
 //        playerView.addGestureRecognizer(tapGesture)
         //gesture.require(toFail: tapGesture)
@@ -142,16 +151,16 @@ class YTFViewController: BaseViewController {
     func calculateFrames() {
         self.initialFirstViewFrame = self.view.frame
         self.playerViewFrame = self.playerView.frame
-        self.tableViewContainerFrame = self.tableViewContainer.frame
+//        self.tableViewContainerFrame = self.tableViewContainer.frame
         self.playerViewMinimizedFrame = self.playerView.frame
-        self.viewMinimizedFrame = self.tableViewContainer.frame
+        self.viewMinimizedFrame = self.view.frame
         self.playerControlsFrame = self.playerControlsView.frame
         
         playerView.translatesAutoresizingMaskIntoConstraints = true
-        tableViewContainer.translatesAutoresizingMaskIntoConstraints = true
+//        tableViewContainer.translatesAutoresizingMaskIntoConstraints = true
         playerControlsView.translatesAutoresizingMaskIntoConstraints = true
         backPlayerControlsView.translatesAutoresizingMaskIntoConstraints = true
-        tableViewContainer.frame = self.initialFirstViewFrame!
+//        tableViewContainer.frame = self.initialFirstViewFrame!
         self.playerControlsView.frame = self.playerControlsFrame!
         
         transparentView = UIView.init(frame: initialFirstViewFrame!)

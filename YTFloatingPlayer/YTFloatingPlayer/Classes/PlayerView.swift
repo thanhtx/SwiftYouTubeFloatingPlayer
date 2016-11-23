@@ -140,6 +140,9 @@ private extension CMTime {
                 return
             }
             let newTime = CMTimeMakeWithSeconds(newValue, timescale)
+            if (CMTIME_IS_INVALID(newTime)) {
+                return;
+            }
             player!.seek(to: newTime,toleranceBefore: CMTime.zero,toleranceAfter: CMTime.zero)
         }
     }
@@ -252,7 +255,9 @@ private extension CMTime {
     
     
     open func stop() {
-        currentTime = 0
+        if currentTime != 0 {
+            currentTime = 0
+        }
         pause()
     }
     open func next() {

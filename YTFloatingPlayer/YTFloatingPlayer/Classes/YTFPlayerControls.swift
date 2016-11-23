@@ -69,8 +69,8 @@ extension YTFViewController: PlayerViewDelegate {
     func readyToPlay() {
         progressIndicatorView.stopAnimating()
         progressIndicatorView.isHidden = true
-        playerTapGesture = UITapGestureRecognizer(target: self, action: #selector(YTFViewController.showPlayerControls))
-        playerView.addGestureRecognizer(playerTapGesture!)
+        //playerTapGesture = UITapGestureRecognizer(target: self, action: #selector(YTFViewController.showPlayerControls))
+        //playerView.addGestureRecognizer(playerTapGesture!)
         print("Ready to Play")
         self.playerView.play()
     }
@@ -90,8 +90,8 @@ extension YTFViewController: PlayerViewDelegate {
         }
     }
     
-    func playerVideo(_ player: PlayerView, duration: Double) {
-        let duration = Int(duration)
+    func playerVideo(_ player: PlayerView, a: Double) {
+        let duration = a == Double.nan ? -1 : Int(a)
         self.entireTime.text = timeFormatted(duration)
         slider.maximumValue = Float(duration)
     }
@@ -110,7 +110,7 @@ extension YTFViewController: PlayerViewDelegate {
             isPlaying = true
             play.setImage(UIImage(named: "pause"), for: UIControlState())
             hideTimer?.invalidate()
-            showPlayerControls()
+            //showPlayerControls()
         } else {
             isPlaying = false
             play.setImage(UIImage(named: "play"), for: UIControlState())
@@ -123,6 +123,9 @@ extension YTFViewController: PlayerViewDelegate {
     }
     
     func timeFormatted(_ totalSeconds: Int) -> String {
+        if totalSeconds < 0 {
+            return "--:--"
+        }
         
         let seconds: Int = totalSeconds % 60
         let minutes: Int = (totalSeconds / 60) % 60

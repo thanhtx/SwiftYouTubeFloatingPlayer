@@ -31,15 +31,6 @@ fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
-
-enum UIPanGestureRecognizerDirection {
-    case undefined
-    case up
-    case down
-    case left
-    case right
-}
-
 extension YTFViewController {
     
     //MARK: Player Controls Animations
@@ -128,31 +119,52 @@ extension YTFViewController {
     func panAction(_ recognizer: UIPanGestureRecognizer) {
         if (!isFullscreen) {
             let yPlayerLocation = recognizer.location(in: self.view?.window).y
-            
+
             switch recognizer.state {
             case .began:
                 onRecognizerStateBegan(yPlayerLocation, recognizer: recognizer)
                 break
             case .changed:
-                onRecognizerStateChanged(yPlayerLocation, recognizer: recognizer)
+                if gestureAction == .resizePlayer || isMinimized {
+                    onRecognizerStateChanged(yPlayerLocation, recognizer: recognizer)
+                } else {
+                    viewerPage.onRecognizerStateChanged(recognizer: recognizer)
+                }
                 break
             default:
-                onRecognizerStateEnded(yPlayerLocation, recognizer: recognizer)
+                if gestureAction == .resizePlayer || isMinimized {
+                    onRecognizerStateEnded(yPlayerLocation, recognizer: recognizer)
+                } else {
+                    viewerPage.onRecognizerStateEnded(recognizer: recognizer)
+                }
+                gestureAction = .undefined
             }
         }
     }
-    
+
     func tapAction(_ recognizer: UITapGestureRecognizer) {
-        playerPage.hideKeyboard(sender: recognizer)
+        viewerPage.hideKeyboard(sender: recognizer)
     }
     
     func onRecognizerStateBegan(_ yPlayerLocation: CGFloat, recognizer: UIPanGestureRecognizer) {
-        playerPage.hideKeyboard(sender: recognizer)
+        viewerPage.hideKeyboard(sender: recognizer)
         hidePlayerControls(true)
         panGestureDirection = UIPanGestureRecognizerDirection.undefined
         
         let velocity = recognizer.velocity(in: recognizer.view)
         detectPanDirection(velocity)
+
+        if viewerPage.screenState == .infoHidden || isMinimized {
+            switch panGestureDirection! {
+            case .left:
+                viewerPage.onRecognizerStateBegan(recognizer: recognizer)
+            default:
+                gestureAction = .resizePlayer
+                break
+            }
+        } else {
+            viewerPage.onRecognizerStateBegan(recognizer: recognizer)
+        }
         
         touchPositionStartY = recognizer.location(in: self.playerView).y
         touchPositionStartX = recognizer.location(in: self.playerView).x
@@ -218,24 +230,7 @@ extension YTFViewController {
     
     func detectPanDirection(_ velocity: CGPoint) {
         minimizeButton.isHidden = true
-        let isVerticalGesture = fabs(velocity.y) > fabs(velocity.x)
-        
-        if (isVerticalGesture) {
-            
-            if (velocity.y > 0) {
-                panGestureDirection = UIPanGestureRecognizerDirection.down
-            } else {
-                panGestureDirection = UIPanGestureRecognizerDirection.up
-            }
-            
-        } else {
-            
-            if (velocity.x > 0) {
-                panGestureDirection = UIPanGestureRecognizerDirection.right
-            } else {
-                panGestureDirection = UIPanGestureRecognizerDirection.left
-            }
-        }
+        panGestureDirection = GestureUtil.detectGestureDirection(velocity)
     }
     
     func adjustViewOnVerticalPan(_ yPlayerLocation: CGFloat, trueOffset: CGFloat, xOffset: CGFloat, recognizer: UIPanGestureRecognizer) {
@@ -337,7 +332,7 @@ extension YTFViewController {
     }
     
     func minimizeViews() {
-        dragViewController?.playerPage.isHidden = true
+        dragViewController?.viewerPage.isHidden = true
 
         minimizeButton.isHidden = true
         hidePlayerControls(true)
@@ -375,7 +370,7 @@ extension YTFViewController {
     }
     
     func expandViews() {
-        dragViewController?.playerPage.isHidden = false
+        dragViewController?.viewerPage.isHidden = false
         
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseIn, animations: {
             self.playerView.frame = self.playerViewFrame!
@@ -415,5 +410,4 @@ extension YTFViewController {
         self.playerControlsView?.removeFromSuperview()
         self.backPlayerControlsView?.removeFromSuperview()
     }
-    
 }

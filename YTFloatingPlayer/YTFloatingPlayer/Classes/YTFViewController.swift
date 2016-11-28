@@ -31,13 +31,27 @@ fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
   }
 }
 
+enum ViewerViewControllerState {
+    case
+    normal,
+    infoHidden
+}
 
-class YTFViewController: BaseViewController {
+enum ViewerGestureAction {
+    case
+    undefined,
+    hideInfo,
+    showInfo,
+    showNextMedia,
+    showPreviousMedia,
+    resizePlayer
+}
+
+class YTFViewController: AppViewController {
     
     @IBOutlet weak var play: UIButton!
     @IBOutlet weak var fullscreen: UIButton!
     @IBOutlet weak var playerView: PlayerView!
-//    @IBOutlet weak var tableViewContainer: UIView!
     @IBOutlet weak var minimizeButton: YTFPopupCloseButton!
     @IBOutlet weak var playerControlsView: UIView!
     @IBOutlet weak var backPlayerControlsView: UIView!
@@ -46,8 +60,13 @@ class YTFViewController: BaseViewController {
     @IBOutlet weak var entireTime: UILabel!
     @IBOutlet weak var currentTime: UILabel!
     @IBOutlet weak var progressIndicatorView: UIActivityIndicatorView!
-    
-    @IBOutlet weak var playerPage: PlayerPage!
+
+    @IBOutlet weak var playerViewContainer: UIView!
+    @IBOutlet weak var thumbnailContainer: UIView!
+    @IBOutlet weak var playerTopMarginContraint: NSLayoutConstraint!
+    @IBOutlet weak var viewerPage: ViewerPage!
+    let viewerLiveController = ControllerFactory.createViewerLiveController()
+    var gestureAction: ViewerGestureAction = .undefined
     
     var isOpen: Bool = false
     
@@ -94,29 +113,25 @@ class YTFViewController: BaseViewController {
     var touchPositionStartY: CGFloat?
     var touchPositionStartX: CGFloat?
     
-    enum UIPanGestureRecognizerDirection {
-        case undefined
-        case up
-        case down
-        case left
-        case right
-    }
-    
-    let playerController = ControllerFactory.createPlayerController()
-    
     override func viewDidLoad() {
         restorationIdentifier = Constant.ViewController.player
         initPlayerWithURLs()
         initViews()
         playerView.delegate = self
         super.viewDidLoad()
-        
-        addView(playerPage)
+
+        viewerPage.viewerLiveController = viewerLiveController
+        viewerPage.thumbnailContainer = thumbnailContainer
+        viewerPage.playerTopMarginContraint = playerTopMarginContraint
+        addView(viewerPage)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         let media = initData[Constant.ViewParam.media] as! MediaDto
-        playerController.joinSocket(media: media)
+        viewerLiveController.mediaListType = initData[Constant.ViewParam.mediaListType] as! MediaListType
+        viewerLiveController.criteria = initData[Constant.ViewParam.criteria] as? String
+        viewerLiveController.keyword = initData[Constant.ViewParam.keyword] as? String
+        viewerLiveController.joinSocket(media: media)
         
         super.viewDidAppear(animated)
         calculateFrames()
@@ -124,7 +139,7 @@ class YTFViewController: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        playerController.leaveSocket()
+        viewerLiveController.leaveSocket()
     }
     
     func initPlayerWithURLs() {
@@ -140,27 +155,23 @@ class YTFViewController: BaseViewController {
         playerControlsView.alpha = 0.0
         backPlayerControlsView.alpha = 0.0
         let gesture = UIPanGestureRecognizer.init(target: self, action: #selector(YTFViewController.panAction(_:)))
-        playerView.addGestureRecognizer(gesture)
+        playerViewContainer.addGestureRecognizer(gesture)
         playerView.fillMode = .resizeAspectFill
         self.hidePlayerControls(false)
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(YTFViewController.tapAction(_:)))
-//        playerView.addGestureRecognizer(tapGesture)
-        //gesture.require(toFail: tapGesture)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(YTFViewController.tapAction(_:)))
+        playerViewContainer.addGestureRecognizer(tapGesture)
     }
     
     func calculateFrames() {
         self.initialFirstViewFrame = self.view.frame
         self.playerViewFrame = self.playerView.frame
-//        self.tableViewContainerFrame = self.tableViewContainer.frame
         self.playerViewMinimizedFrame = self.playerView.frame
         self.viewMinimizedFrame = self.view.frame
         self.playerControlsFrame = self.playerControlsView.frame
         
-        playerView.translatesAutoresizingMaskIntoConstraints = true
-//        tableViewContainer.translatesAutoresizingMaskIntoConstraints = true
+        //playerView.translatesAutoresizingMaskIntoConstraints = true
         playerControlsView.translatesAutoresizingMaskIntoConstraints = true
         backPlayerControlsView.translatesAutoresizingMaskIntoConstraints = true
-//        tableViewContainer.frame = self.initialFirstViewFrame!
         self.playerControlsView.frame = self.playerControlsFrame!
         
         transparentView = UIView.init(frame: initialFirstViewFrame!)
@@ -176,6 +187,24 @@ class YTFViewController: BaseViewController {
     
     @IBAction func minimizeButtonTouched(_ sender: AnyObject) {
         minimizeViews()
+    }
+
+    @nonobjc
+    override func update(_ command: Command, data: Any?) {
+        switch command {
+        case .vPlayNextMedia:
+            let media = self.viewerLiveController.nextMedia
+            let url = URL(string: media.fileUrl)!
+            YTFPlayer.changeURL(url)
+            self.viewerLiveController.changeMedia(media: media)
+        case .vPlayPreviousMedia:
+            let media = self.viewerLiveController.previousMedia
+            let url = URL(string: media.fileUrl)!
+            YTFPlayer.changeURL(url)
+            self.viewerLiveController.changeMedia(media: media)
+        default:
+            super.update(command, data: data)
+        }
     }
 }
 

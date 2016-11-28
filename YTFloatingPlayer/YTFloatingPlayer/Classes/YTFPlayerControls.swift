@@ -73,6 +73,7 @@ extension YTFViewController: PlayerViewDelegate {
         //playerView.addGestureRecognizer(playerTapGesture!)
         print("Ready to Play")
         self.playerView.play()
+        self.thumbnailContainer.removeAllSubViews()
     }
     
     func playerVideo(_ player: PlayerView, statusItemPlayer: PVItemStatus, error: NSError?) {
